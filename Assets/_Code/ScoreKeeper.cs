@@ -6,7 +6,7 @@ public class ScoreKeeper : MonoBehaviour {
     /// <summary>
     /// Player score
     /// </summary>
-    public int Score;
+    public static int Score = 0;
 
     /// <summary>
     /// Score UI text
@@ -26,9 +26,8 @@ public class ScoreKeeper : MonoBehaviour {
         scoreText.text = Score.ToString();
     }
 
-    public void Reset()
+    public static void Reset()
     {
         Score = 0;
-        scoreText.text = Score.ToString();
     }
 }

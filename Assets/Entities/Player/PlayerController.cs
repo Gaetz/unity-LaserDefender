@@ -166,7 +166,17 @@ public class PlayerController : MonoBehaviour {
         // Death
         if (Health <= 0)
         {
-            Destroy(gameObject);
+            Lose();
         }
+    }
+
+    /// <summary>
+    /// Called when player loses
+    /// </summary>
+    void Lose()
+    {
+        LevelManager levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        levelManager.LoadLevel("WinScreen");
+        Destroy(gameObject);
     }
 }
