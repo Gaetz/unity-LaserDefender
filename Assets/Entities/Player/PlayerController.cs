@@ -45,6 +45,11 @@ public class PlayerController : MonoBehaviour {
     public float ProjectileCooldown;
 
     /// <summary>
+    /// Sound when fire
+    /// </summary>
+    public AudioClip FireSound;
+
+    /// <summary>
     /// Projectile offset ofr not hitting oneself
     /// </summary>
     private Vector3 projectileOffset = new Vector3(0, 1, 0);
@@ -109,6 +114,7 @@ public class PlayerController : MonoBehaviour {
     {
         GameObject beam = Instantiate(Projectile, transform.position + projectileOffset, Quaternion.identity);
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, ProjectileSpeed, 0);
+        AudioSource.PlayClipAtPoint(FireSound, transform.position);
     }
 
     /// <summary>

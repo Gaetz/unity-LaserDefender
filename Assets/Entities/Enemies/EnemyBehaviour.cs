@@ -24,6 +24,16 @@ public class EnemyBehaviour : MonoBehaviour {
     /// </summary>
     public float ProjectileProbability;
 
+    /// <summary>
+    /// Sound when fire
+    /// </summary>
+    public AudioClip FireSound;
+
+    /// <summary>
+    /// Sound when dies
+    /// </summary>
+    public AudioClip DeathSound;
+
     Vector3 ProjectileOffset = new Vector3(0, -0.8f, 0);
 
     /// <summary>
@@ -42,6 +52,7 @@ public class EnemyBehaviour : MonoBehaviour {
         // Death
         if(Health <= 0)
         {
+            AudioSource.PlayClipAtPoint(DeathSound, transform.position);
             Destroy(gameObject);
         }
     }
@@ -57,5 +68,6 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         GameObject beam = Instantiate(Projectile, transform.position + ProjectileOffset, Quaternion.identity);
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, -ProjectileSpeed, 0);
+        AudioSource.PlayClipAtPoint(FireSound, transform.position);
     }
 }
