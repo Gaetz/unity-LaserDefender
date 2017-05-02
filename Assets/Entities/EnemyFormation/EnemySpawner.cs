@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,12 +53,20 @@ public class EnemySpawner : MonoBehaviour {
         xMin = Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, distanceToCamera)).x + padding;
         xMax = Camera.main.ViewportToWorldPoint(new Vector3(1f, 0f, distanceToCamera)).x - padding;
         // Generating
+        Respawn();
+    }
+
+    /// <summary>
+    /// Respawn all enemies
+    /// </summary>
+    void Respawn()
+    {
         foreach (Transform child in transform)
         {
             GameObject enemy = Instantiate(EnemyPrefab, child.transform.position, Quaternion.identity);
             enemy.transform.parent = child;
         }
-	}
+    }
 
     public void OnDrawGizmos()
     {
@@ -87,5 +96,24 @@ public class EnemySpawner : MonoBehaviour {
         {
             isMovingRight = false;
         }
+        // Control spawn
+        if(AllMembersDead())
+        {
+            Respawn();
+        }
+    }
+
+    /// <summary>
+    /// True when all members of the formation are dead
+    /// </summary>
+    /// <returns>If all members of the formation are dead</returns>
+    private bool AllMembersDead()
+    {
+        foreach (Transform childPosition in transform)
+        {
+            if (childPosition.childCount > 0)
+                return false;
+        }
+        return true;
     }
 }
