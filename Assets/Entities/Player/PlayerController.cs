@@ -5,6 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     /// <summary>
+    /// Player's Health
+    /// </summary>
+    public float Health;
+
+    /// <summary>
     /// Maximum horizontal speed
     /// </summary>
     public float MaxSpeedX;
@@ -38,6 +43,11 @@ public class PlayerController : MonoBehaviour {
     /// Laser speed
     /// </summary>
     public float ProjectileCooldown;
+
+    /// <summary>
+    /// Projectile offset ofr not hitting oneself
+    /// </summary>
+    private Vector3 projectileOffset = new Vector3(0, 1, 0);
 
     /// <summary>
     /// Horizontal speed
@@ -92,9 +102,12 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Fire a laser
+    /// </summary>
     void Fire()
     {
-        GameObject beam = Instantiate(Projectile, transform.position, Quaternion.identity);
+        GameObject beam = Instantiate(Projectile, transform.position + projectileOffset, Quaternion.identity);
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, ProjectileSpeed, 0);
     }
 
@@ -128,6 +141,26 @@ public class PlayerController : MonoBehaviour {
         else if (speedX < 0)
         {
             speedX += Deceleration;
+        }
+    }
+
+    /// <summary>
+    /// Behaviour when collided by a laser
+    /// </summary>
+    /// <param name="collider">The laser that collides</param>
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        // Handle projectile hit
+        Projectile projectile = collider.gameObject.GetComponent<Projectile>();
+        if (projectile)
+        {
+            Health -= projectile.Damage;
+            projectile.Hit();
+        }
+        // Death
+        if (Health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
