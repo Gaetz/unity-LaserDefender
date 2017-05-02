@@ -25,9 +25,24 @@ public class PlayerController : MonoBehaviour {
     public float Padding;
 
     /// <summary>
+    /// Laser the player shot
+    /// </summary>
+    public GameObject Projectile;
+
+    /// <summary>
+    /// Laser speed
+    /// </summary>
+    public float ProjectileSpeed;
+
+    /// <summary>
+    /// Laser speed
+    /// </summary>
+    public float ProjectileCooldown;
+
+    /// <summary>
     /// Horizontal speed
     /// </summary>
-    private float speedX;
+    float speedX;
 
     /// <summary>
     /// Max player's left position
@@ -57,6 +72,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     void ManageInput()
     {
+        // Move
         if(Input.GetKey(KeyCode.LeftArrow) && -MaxSpeedX <= speedX)
         {
             speedX -= Acceleration;
@@ -65,6 +81,21 @@ public class PlayerController : MonoBehaviour {
         {
             speedX += Acceleration;
         }
+        // Laser
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            InvokeRepeating("Fire", 0.0001f, ProjectileCooldown);
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            CancelInvoke("Fire");
+        }
+    }
+
+    void Fire()
+    {
+        GameObject beam = Instantiate(Projectile, transform.position, Quaternion.identity);
+        beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, ProjectileSpeed, 0);
     }
 
     /// <summary>
