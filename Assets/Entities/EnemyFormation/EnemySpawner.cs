@@ -43,12 +43,12 @@ public class EnemySpawner : MonoBehaviour {
     /// <summary>
     /// Max player's left position
     /// </summary>
-    float xMin;
+    private float xMin;
 
     /// <summary>
     /// Max player's right position
     /// </summary>
-    float xMax;
+    private float xMax;
 
     // Use this for initialization
     void Start () {

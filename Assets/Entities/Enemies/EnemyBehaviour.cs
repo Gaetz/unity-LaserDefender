@@ -25,6 +25,16 @@ public class EnemyBehaviour : MonoBehaviour {
     public float ProjectileProbability;
 
     /// <summary>
+    /// Score value when enemy dies
+    /// </summary>
+    public int ScoreValue;
+
+    /// <summary>
+    /// Reference to the score keeper to call points increase
+    /// </summary>
+    private ScoreKeeper scoreKeeper;
+
+    /// <summary>
     /// Sound when fire
     /// </summary>
     public AudioClip FireSound;
@@ -34,7 +44,18 @@ public class EnemyBehaviour : MonoBehaviour {
     /// </summary>
     public AudioClip DeathSound;
 
+    /// <summary>
+    /// Offset for creating projectile in front of ^space ship
+    /// </summary>
     Vector3 ProjectileOffset = new Vector3(0, -0.8f, 0);
+
+    /// <summary>
+    /// On creation
+    /// </summary>
+    void Start()
+    {
+        scoreKeeper = GameObject.Find("Score").GetComponent<ScoreKeeper>();
+    }
 
     /// <summary>
     /// Behaviour when collided by a laser
@@ -53,6 +74,7 @@ public class EnemyBehaviour : MonoBehaviour {
         if(Health <= 0)
         {
             AudioSource.PlayClipAtPoint(DeathSound, transform.position);
+            scoreKeeper.ScorePoints(ScoreValue);
             Destroy(gameObject);
         }
     }
