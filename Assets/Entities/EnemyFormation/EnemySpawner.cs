@@ -8,8 +8,11 @@ public class EnemySpawner : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        GameObject enemy = Instantiate(EnemyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        enemy.transform.parent = this.transform;
+        foreach(Transform child in transform)
+        {
+            GameObject enemy = Instantiate(EnemyPrefab, child.transform.position, Quaternion.identity);
+            enemy.transform.parent = child;
+        }
 	}
 	
 	// Update is called once per frame
