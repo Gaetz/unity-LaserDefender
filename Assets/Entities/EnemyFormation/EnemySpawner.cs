@@ -26,6 +26,11 @@ public class EnemySpawner : MonoBehaviour {
     public float SpeedX;
 
     /// <summary>
+    /// Time between enemy spawn
+    /// </summary>
+    public float SpawnDelay;
+
+    /// <summary>
     /// Padding for the ship to stop near the screen edge
     /// </summary>
     private float padding;
@@ -57,9 +62,25 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     /// <summary>
-    /// Respawn all enemies
+    /// Respawn enemies one by one
     /// </summary>
     void Respawn()
+    {
+        Transform freePosition = NextFreePosition();
+        if (freePosition)
+        {
+            GameObject enemy = Instantiate(EnemyPrefab, freePosition.position, Quaternion.identity);
+            enemy.transform.parent = freePosition;
+        }
+        if (NextFreePosition()) {
+            Invoke("Respawn", SpawnDelay);
+        }
+    }
+
+    /// <summary>
+    /// Respawn all enemies
+    /// </summary>
+    void RespawnAll()
     {
         foreach (Transform child in transform)
         {
@@ -101,6 +122,20 @@ public class EnemySpawner : MonoBehaviour {
         {
             Respawn();
         }
+    }
+
+    /// <summary>
+    /// Return the next free position in spawner
+    /// </summary>
+    /// <returns>Position's transform</returns>
+    Transform NextFreePosition()
+    {
+        foreach (Transform childPosition in transform)
+        {
+            if (childPosition.childCount == 0)
+                return childPosition;
+        }
+        return null;
     }
 
     /// <summary>

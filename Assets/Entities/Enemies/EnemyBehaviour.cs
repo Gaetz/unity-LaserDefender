@@ -49,7 +49,7 @@ public class EnemyBehaviour : MonoBehaviour {
     void Update()
     {
         float probability = Time.deltaTime * ProjectileProbability;
-        if(Random.value < probability)
+        if (Random.value < probability)
             Fire();
     }
 
