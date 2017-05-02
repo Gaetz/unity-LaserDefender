@@ -47,7 +47,7 @@ public class EnemyBehaviour : MonoBehaviour {
     /// <summary>
     /// Offset for creating projectile in front of ^space ship
     /// </summary>
-    Vector3 ProjectileOffset = new Vector3(0, -0.8f, 0);
+    Vector3 ProjectileOffset = new Vector3(0, 0, 0);
 
     /// <summary>
     /// On creation

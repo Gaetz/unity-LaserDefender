@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// Projectile offset ofr not hitting oneself
     /// </summary>
-    private Vector3 projectileOffset = new Vector3(0, 1, 0);
+    private Vector3 projectileOffset = new Vector3(0, 0, 0);
 
     /// <summary>
     /// Horizontal speed
