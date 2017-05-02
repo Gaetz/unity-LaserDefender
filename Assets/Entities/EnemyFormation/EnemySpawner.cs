@@ -4,9 +4,24 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
 
+    /// <summary>
+    /// Generated enemies
+    /// </summary>
     public GameObject EnemyPrefab;
+
+    /// <summary>
+    /// Formation width
+    /// </summary>
     public float Width;
+
+    /// <summary>
+    /// Formation height
+    /// </summary>
     public float Height;
+
+    /// <summary>
+    /// Formation speed
+    /// </summary>
     public float SpeedX;
 
     /// <summary>
@@ -64,9 +79,13 @@ public class EnemySpawner : MonoBehaviour {
         float clampedX = Mathf.Clamp(transform.position.x, xMin, xMax);
         transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
         // Turn player
-        if(transform.position.x <= xMin || transform.position.x >= xMax)
+        if(transform.position.x <= xMin)
         {
-            isMovingRight = !isMovingRight;
+            isMovingRight = true;
+        }
+        else if (transform.position.x >= xMax)
+        {
+            isMovingRight = false;
         }
     }
 }
